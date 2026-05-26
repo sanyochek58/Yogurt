@@ -24,6 +24,11 @@ dependencies {
     implementation(ktorLibs.server.statusPages)
     implementation(ktorLibs.serialization.kotlinx.json)
 
+    // Зависимости JWT
+    implementation("io.ktor:ktor-server-auth:3.4.3")
+    implementation("io.ktor:ktor-server-auth-jwt:3.4.3")
+    implementation("com.auth0:java-jwt:4.4.0")
+
     // Зависимости БД (Exposed ORM и PostgreSQL JDBC)
     implementation("org.jetbrains.exposed:exposed-core:0.61.0")
     implementation("org.jetbrains.exposed:exposed-jdbc:0.61.0")
