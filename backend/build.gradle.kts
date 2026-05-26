@@ -15,19 +15,32 @@ kotlin {
     jvmToolchain(21)
 }
 dependencies {
-    implementation(ktorLibs.serialization.kotlinx.json)
-    implementation(ktorLibs.server.callLogging)
-    implementation(ktorLibs.server.contentNegotiation)
+    // Зависимости ktor
     implementation(ktorLibs.server.core)
+    implementation(ktorLibs.server.netty)
+    implementation(ktorLibs.server.contentNegotiation)
+    implementation(ktorLibs.server.callLogging)
     implementation(ktorLibs.server.cors)
     implementation(ktorLibs.server.statusPages)
-    implementation(ktorLibs.server.netty)
-    implementation(libs.exposed.core)
-    implementation(libs.exposed.r2dbc)
-    implementation(libs.h2database.h2)
-    implementation(libs.h2database.r2dbc)
+    implementation(ktorLibs.serialization.kotlinx.json)
+
+    // Зависимости БД (Exposed ORM и PostgreSQL JDBC)
+    implementation("org.jetbrains.exposed:exposed-core:0.61.0")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.61.0")
+    implementation("org.jetbrains.exposed:exposed-java-time:0.61.0")
+    implementation("org.postgresql:postgresql:42.7.4")
+
+    // Зависимости миграций (Flyway)
+    implementation("org.flywaydb:flyway-core:10.21.0")
+    implementation("org.flywaydb:flyway-database-postgresql:10.21.0")
+
+    // Connection pool
+    implementation("com.zaxxer:HikariCP:6.2.1")
+
+    // Логирование
     implementation(libs.logback.classic)
 
+    // Тесты
     testImplementation(kotlin("test"))
     testImplementation(ktorLibs.server.testHost)
 }
