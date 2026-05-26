@@ -1,4 +1,4 @@
-package db.migrations
+package db.migration
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -44,7 +44,7 @@ object DatabaseFactory{
     private fun runMigrations(dataSource: HikariDataSource) {
         Flyway.configure()
             .dataSource(dataSource)
-            .locations("classpath:db/migrations")
+            .locations("classpath:db/migration")
             .baselineOnMigrate(true)
             .load()
             .migrate()

@@ -37,6 +37,9 @@ dependencies {
     // Connection pool
     implementation("com.zaxxer:HikariCP:6.2.1")
 
+    // Хэширование паролей
+    implementation("org.mindrot:jbcrypt:0.4")
+
     // Логирование
     implementation(libs.logback.classic)
 
