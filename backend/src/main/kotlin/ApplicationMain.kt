@@ -23,13 +23,22 @@ fun Application.module(){
     val jdbcUrl = environment.config.property("db.jdbcUrl").getString()
     val username = environment.config.property("db.username").getString()
     val password = environment.config.property("db.password").getString()
+
     val jwtSecret = environment.config.property("jwt.secret").getString()
     val jwtIssuer = environment.config.property("jwt.issuer").getString()
     val jwtAudience = environment.config.property("jwt.audience").getString()
+
     val serverHost = environment.config.property("xray.serverHost").getString()
     val serverPort = environment.config.property("xray.serverPort").getString().toInt()
     val publicKey = environment.config.property("xray.publicKey").getString()
     val shortId = environment.config.property("xray.shortId").getString()
+
+    val emailHost = environment.config.property("email.host").getString()
+    val emailPort = environment.config.property("email.port").getString().toInt()
+    val emailUsername = environment.config.property("email.username").getString()
+    val emailPassword = environment.config.property("email.password").getString()
+    val emailFrom = environment.config.property("email.from").getString()
+
 
     DatabaseFactory.init(jdbcUrl, username, password)
 
@@ -40,7 +49,14 @@ fun Application.module(){
 
     val jwtService = JwtService(jwtSecret,jwtIssuer, jwtAudience)
     val authService = AuthService(authRepository)
-    val emailService = EmailServiceImpl()
+    val emailService = EmailServiceImpl(
+        authRepository = authRepository,
+        smtpHost = emailHost,
+        smtpPort = emailPort,
+        username = emailUsername,
+        password = emailPassword,
+        fromAddress = emailFrom
+    )
     val vpnConfigService = VpnConfigService(
         repository = vpnConfigRepository,
         serverHost = serverHost,

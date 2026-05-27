@@ -48,6 +48,9 @@ dependencies {
     // Логирование
     implementation(libs.logback.classic)
 
+    // Email(smtp)
+    implementation("org.simplejavamail:simple-java-mail:8.12.2")
+
     // Тесты
     testImplementation(kotlin("test"))
     testImplementation(ktorLibs.server.testHost)

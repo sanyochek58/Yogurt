@@ -8,12 +8,15 @@ import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.plugins.statuspages.exception
 import io.ktor.server.response.respond
 import kotlinx.serialization.Serializable
+import org.slf4j.LoggerFactory
 
 @Serializable
 data class ErrorResponse(
     val error: String,
     val message: String,
 )
+
+private val logger = LoggerFactory.getLogger("StatusPages")
 
 fun Application.configureStatusPages() {
     install(StatusPages) {
@@ -30,6 +33,7 @@ fun Application.configureStatusPages() {
         }
 
         exception<Throwable> { call, cause ->
+            logger.error("Unhandled exception: ${cause.message}", cause)
             call.respond(HttpStatusCode.InternalServerError,
                 ErrorResponse("INTERNAL_SERVER_ERROR", "An internal server error occurred"))
         }
