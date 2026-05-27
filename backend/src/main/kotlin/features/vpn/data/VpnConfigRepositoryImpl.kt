@@ -23,7 +23,7 @@ class VpnConfigRepositoryImpl: VpnConfigRepository {
         VpnConfigsTable
             .insertReturning {
                 it[VpnConfigsTable.userId] = userId
-                it[VpnConfigsTable.vlessUUID] = vlessUUID
+                it[VpnConfigsTable.vlessUUID] = vlessId
                 it[VpnConfigsTable.vlessLink] = vlessLink
             }
             .single()

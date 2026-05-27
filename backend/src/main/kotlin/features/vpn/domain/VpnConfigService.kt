@@ -20,7 +20,7 @@ class VpnConfigService(
         val vlessUuid = UUID.randomUUID()
         val vlessLink = buildVlessLink(vlessUuid)
 
-        val config = repository.create(vlessUuid, userId, vlessLink)
+        val config = repository.create(userId, vlessUuid, vlessLink)
         emailService.sendVlessLink(userId, vlessLink)
         return config
     }

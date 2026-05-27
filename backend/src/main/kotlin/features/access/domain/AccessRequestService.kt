@@ -1,5 +1,6 @@
 package com.yogurtvpn.features.access.domain
 
+import com.yogurtvpn.features.vpn.domain.VpnConfigService
 import java.util.UUID
 
 class AccessRequestService(
@@ -28,7 +29,7 @@ class AccessRequestService(
         }
 
         val approved = repository.approve(requestId, adminId)
-        vpnConfigService.createConfigForUser(apprved.userId)
+        vpnConfigService.createConfigForUSer(approved.userId)
         return approved
     }
 }

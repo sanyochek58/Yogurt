@@ -1,16 +1,16 @@
 package com.yogurtvpn.features.vpn.data
 
-import com.fasterxml.jackson.databind.type.LogicalType
 import com.yogurtvpn.features.vpn.domain.VpnConfig
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
+import java.util.UUID
 
 object VpnConfigsTable : Table("vpn_configs") {
     val id = uuid("id").autoGenerate()
     val userId = uuid("user_id")
-    val vlessUUID = uuid("vless_id").autoGenerate()
+    val vlessUUID = uuid("vless_uuid").clientDefault { UUID.randomUUID() }
     val vlessLink = text("vless_link")
     val isActive = bool("is_active").default(true)
     val createdAt = datetime("created_at").default(LocalDateTime.now())

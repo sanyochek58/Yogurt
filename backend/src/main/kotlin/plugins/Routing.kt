@@ -1,5 +1,7 @@
 package com.yogurtvpn
 
+import com.yogurtvpn.features.access.domain.AccessRequestService
+import com.yogurtvpn.features.access.presentation.accessRoutes
 import com.yogurtvpn.features.auth.domain.AuthService
 import com.yogurtvpn.features.auth.domain.JwtService
 import com.yogurtvpn.features.auth.presentation.authRoutes
@@ -15,7 +17,7 @@ data class HealthResponse(
     val version: String
 )
 
-fun Application.configureRouting(authService: AuthService, jwtService: JwtService) {
+fun Application.configureRouting(authService: AuthService, jwtService: JwtService, accessRequestService: AccessRequestService) {
     routing {
         get("/health") {
             call.respond(
@@ -27,5 +29,6 @@ fun Application.configureRouting(authService: AuthService, jwtService: JwtServic
             )
         }
         authRoutes(authService, jwtService)
+        accessRoutes(accessRequestService)
     }
 }

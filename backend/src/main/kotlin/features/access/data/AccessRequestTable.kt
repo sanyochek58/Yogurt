@@ -11,7 +11,7 @@ object AccessRequestTable: Table("access_requests") {
     val id = uuid("id").autoGenerate()
     val userId = uuid("user_id")
     val status = varchar("status", 50).default("PENDING")
-    val reqestedAt = datetime( "reqested_at").default(LocalDateTime.now())
+    val requestedAt = datetime("requested_at").default(LocalDateTime.now())
     val reviewedAt = datetime( "reviewed_at").nullable()
     val reviewedBy = uuid("reviewed_by").nullable()
 
@@ -22,7 +22,7 @@ fun ResultRow.toAccessRequest() = AccessRequest(
     id = this[AccessRequestTable.id],
     userId = this[AccessRequestTable.userId],
     status = AccessRequestStatus.valueOf(this[AccessRequestTable.status]),
-    requestedAt = this[AccessRequestTable.reqestedAt],
+    requestedAt = this[AccessRequestTable.requestedAt],
     reviewedAt = this[AccessRequestTable.reviewedAt],
     reviewedBy = this[AccessRequestTable.reviewedBy]
 )
