@@ -3,6 +3,7 @@ package com.yogurtvpn
 import com.yogurtvpn.features.auth.data.AuthRepositoryImpl
 import com.yogurtvpn.features.auth.domain.AuthService
 import com.yogurtvpn.features.auth.domain.JwtService
+import com.yogurtvpn.plugins.configureSecurity
 import com.yogurtvpn.plugins.configureStatusPages
 import db.migration.DatabaseFactory
 import io.ktor.server.application.*
@@ -30,5 +31,6 @@ fun Application.module(){
     configureSerialization()
     configureHTTP()
     configureStatusPages()
+    configureSecurity(jwtSecret, jwtIssuer, jwtAudience)
     configureRouting(authService, jwtService)
 }
