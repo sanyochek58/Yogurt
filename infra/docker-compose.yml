@@ -1,0 +1,83 @@
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: yogurt-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - yogurt-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      
+
+  backend:
+    image: sandal58/yogurt-backend:latest
+    container_name: yogurt-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_JDBC_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      DB_USERNAME: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      XRAY_SERVER_HOST: ${XRAY_SERVER_HOST}
+      XRAY_SERVER_PORT: ${XRAY_SERVER_PORT}
+      XRAY_PUBLIC_KEY: ${XRAY_PUBLIC_KEY}
+      XRAY_SHORT_ID: ${XRAY_SHORT_ID}
+      EMAIL_USERNAME: ${EMAIL_USERNAME}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      EMAIL_FROM: ${EMAIL_FROM}
+    networks:
+      - yogurt-network
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: yogurt-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - yogurt-network
+    depends_on:
+      - backend
+
+  xray:
+    image: ghcr.io/xtls/xray-core:latest
+    container_name: yogurt-xray
+    restart: unless-stopped
+    network_mode: host
+    cap_add:
+      - NET_BIND_SERVICE
+    volumes:
+      - ./xray/config/config.json:/etc/xray/config.json:ro
+    command: ["run", "-c", "/etc/xray/config.json:ro"]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  yogurt-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  caddy_data:
+  caddy_config:
