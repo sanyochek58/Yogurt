@@ -3,7 +3,7 @@ package com.yogurtvpn.features.access.data
 import com.yogurtvpn.features.access.domain.AccessRequest
 import com.yogurtvpn.features.access.domain.AccessRequestRepository
 import com.yogurtvpn.features.access.domain.AccessRequestStatus
-import db.migration.DatabaseFactory.dbQuery
+import com.yogurtvpn.db.DatabaseFactory.dbQuery
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.insertReturning
 import org.jetbrains.exposed.sql.selectAll

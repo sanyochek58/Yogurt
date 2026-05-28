@@ -3,7 +3,7 @@ package com.yogurtvpn.features.vpn.data
 import com.yogurtvpn.features.auth.data.UserTable
 import com.yogurtvpn.features.vpn.domain.VpnConfig
 import com.yogurtvpn.features.vpn.domain.VpnConfigRepository
-import db.migration.DatabaseFactory.dbQuery
+import com.yogurtvpn.db.DatabaseFactory.dbQuery
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.insertReturning
 import org.jetbrains.exposed.sql.selectAll

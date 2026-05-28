@@ -10,7 +10,7 @@ import com.yogurtvpn.features.vpn.data.VpnConfigRepositoryImpl
 import com.yogurtvpn.features.vpn.domain.VpnConfigService
 import com.yogurtvpn.plugins.configureSecurity
 import com.yogurtvpn.plugins.configureStatusPages
-import db.migration.DatabaseFactory
+import com.yogurtvpn.db.DatabaseFactory
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
 

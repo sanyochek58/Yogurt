@@ -11,6 +11,10 @@ application {
     mainClass = "io.ktor.server.netty.EngineMain"
 }
 
+tasks.withType<ProcessResources> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 kotlin {
     jvmToolchain(21)
 }
@@ -36,8 +40,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.4")
 
     // Зависимости миграций (Flyway)
-    implementation("org.flywaydb:flyway-core:10.21.0")
-    implementation("org.flywaydb:flyway-database-postgresql:10.21.0")
+    implementation("org.flywaydb:flyway-core:9.22.3")
 
     // Connection pool
     implementation("com.zaxxer:HikariCP:6.2.1")

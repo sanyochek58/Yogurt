@@ -2,7 +2,7 @@ package com.yogurtvpn.features.auth.data
 
 import com.yogurtvpn.features.auth.domain.AuthRepository
 import com.yogurtvpn.features.auth.domain.User
-import db.migration.DatabaseFactory.dbQuery
+import com.yogurtvpn.db.DatabaseFactory.dbQuery
 import org.jetbrains.exposed.sql.insertReturning
 import org.jetbrains.exposed.sql.selectAll
 import java.util.UUID

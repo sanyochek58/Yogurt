@@ -1,4 +1,4 @@
-package db.migration
+package com.yogurtvpn.db
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
