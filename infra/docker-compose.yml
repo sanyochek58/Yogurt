@@ -35,6 +35,8 @@ services:
       XRAY_SERVER_PORT: ${XRAY_SERVER_PORT}
       XRAY_PUBLIC_KEY: ${XRAY_PUBLIC_KEY}
       XRAY_SHORT_ID: ${XRAY_SHORT_ID}
+      EMAIL_HOST: ${EMAIL_HOST}
+      EMAIL_PORT: ${EMAIL_PORT}
       EMAIL_USERNAME: ${EMAIL_USERNAME}
       EMAIL_PASSWORD: ${EMAIL_PASSWORD}
       EMAIL_FROM: ${EMAIL_FROM}
@@ -66,7 +68,7 @@ services:
       - NET_BIND_SERVICE
     volumes:
       - ./xray/config/config.json:/etc/xray/config.json:ro
-    command: ["run", "-c", "/etc/xray/config.json:ro"]
+    command: ["run", "-c", "/etc/xray/config.json"]
     logging:
       driver: "json-file"
       options:
