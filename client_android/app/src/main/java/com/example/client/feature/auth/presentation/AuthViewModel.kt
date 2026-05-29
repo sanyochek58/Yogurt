@@ -58,6 +58,15 @@ class AuthViewModel(
         _uiState.value = _uiState.value.copy(error = null)
     }
 
+    fun logout() {
+        viewModelScope.launch {
+            repository.logout()
+            _uiState.value = AuthUiState()
+            _email.value = ""
+            _password.value = ""
+        }
+    }
+
     private fun parseError(e: Exception): String = when {
         e.message?.contains("400") == true -> "Неверный email или пароль"
         e.message?.contains("409") == true -> "Пользователь уже существует"

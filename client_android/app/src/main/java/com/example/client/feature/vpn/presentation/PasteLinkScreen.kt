@@ -17,13 +17,11 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.yogurtvpn.client.core.theme.*
-import com.yogurtvpn.client.feature.home.presentation.HomeViewModel
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun PasteLinkScreen(
     onBack: () -> Unit,
-    homeViewModel: HomeViewModel = koinViewModel()
+    vpnViewModel: VpnViewModel
 ) {
     var link by remember { mutableStateOf("") }
     val clipboardManager = LocalClipboardManager.current
@@ -124,7 +122,7 @@ fun PasteLinkScreen(
                     Button(
                         onClick = {
                             if (link.startsWith("vless://")) {
-                                homeViewModel.onVlessLinkPasted(link)
+                                vpnViewModel.saveLink(link)
                                 onBack()
                             }
                         },

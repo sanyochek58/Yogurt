@@ -10,6 +10,9 @@ import com.yogurtvpn.client.feature.auth.presentation.AuthViewModel
 import com.yogurtvpn.client.feature.home.data.HomeRepositoryImpl
 import com.yogurtvpn.client.feature.home.domain.HomeRepository
 import com.yogurtvpn.client.feature.home.presentation.HomeViewModel
+import com.yogurtvpn.client.feature.vpn.data.VpnRepositoryImpl
+import com.yogurtvpn.client.feature.vpn.domain.VpnRepository
+import com.yogurtvpn.client.feature.vpn.presentation.VpnViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -22,10 +25,11 @@ val appModule = module {
 
     single<AuthRepository> { AuthRepositoryImpl(get(), get()) }
     single<HomeRepository> { HomeRepositoryImpl(get(), get()) }
+    single<VpnRepository> { VpnRepositoryImpl(get()) }
 
     viewModel { AuthViewModel(get()) }
     viewModel { HomeViewModel(get(), get()) }
-    //viewModel { VpnViewModel(get(), get()) }
+    viewModel { VpnViewModel(get(), get()) }
     
 
 }

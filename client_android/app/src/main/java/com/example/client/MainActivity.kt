@@ -1,17 +1,12 @@
 package com.yogurtvpn.client
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -20,6 +15,8 @@ import com.yogurtvpn.client.feature.auth.presentation.LoginScreen
 import com.yogurtvpn.client.feature.auth.presentation.RegisterScreen
 import com.yogurtvpn.client.feature.home.presentation.HomeScreen
 import com.yogurtvpn.client.feature.vpn.presentation.PasteLinkScreen
+import com.yogurtvpn.client.feature.vpn.presentation.VpnViewModel
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +30,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@SuppressLint("UnrememberedGetBackStackEntry")
 @Composable
 fun YogurtVPNApp(){
     val navController = rememberNavController()
@@ -72,12 +70,22 @@ fun YogurtVPNApp(){
                 },
                 onNavigateToRequestAccess = {
                     navController.navigate(Screen.RequestAccess.route)
+                },
+                onLogout = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(Screen.Home.route) { inclusive = true }
+                    }
                 }
             )
         }
         composable(Screen.PasteLink.route) {
+            val homeEntry = remember(navController) {
+                navController.getBackStackEntry(Screen.Home.route)
+            }
+            val vpnViewModel: VpnViewModel = koinViewModel(viewModelStoreOwner = homeEntry)
             PasteLinkScreen(
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                vpnViewModel = vpnViewModel
             )
         }
     }

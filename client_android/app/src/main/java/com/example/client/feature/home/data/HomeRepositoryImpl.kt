@@ -15,19 +15,23 @@ class HomeRepositoryImpl(
     override suspend fun getAccessStatus(token: String): AccessStatus {
         return try {
             val request = api.getMyAccessRequest(token)
-            if(request.status == "APPROVED"){
+            if (request.status == "APPROVED") {
                 val config = try {
                     api.getVpnConfig(token)
-                }catch (e: Exception){ null }
+                } catch (e: Exception) { null }
                 AccessStatus(
                     hasRequest = true,
-                    status = request.status,
+                    status = "APPROVED",
                     vlessLink = config?.vlessLink
                 )
             } else {
-                AccessStatus(hasRequest = false, status = null, vlessLink = null)
+                AccessStatus(
+                    hasRequest = true,
+                    status = request.status,
+                    vlessLink = null
+                )
             }
-        }catch (e: Exception){
+        } catch (e: Exception) {
             AccessStatus(hasRequest = false, status = null, vlessLink = null)
         }
     }

@@ -10,18 +10,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
-enum class VpnConnectionState {
-    DISCONNECTED, CONNECTING, CONNECTED
-}
-
 data class HomeUiState(
     val isLoading: Boolean = false,
     val accessStatus: String? = null,
     val hasRequest: Boolean = false,
     val vlessLink: String? = null,
-    val vpnState: VpnConnectionState = VpnConnectionState.DISCONNECTED,
     val userEmail: String? = null,
-    val error: String? = null
+    val error: String? = null,
+    val info: String? = null
 )
 
 class HomeViewModel(
@@ -34,7 +30,18 @@ class HomeViewModel(
 
     init {
         loadData()
+        observeVlessLink()
     }
+
+    private fun observeVlessLink() {
+        viewModelScope.launch {
+            storage.vlessLink.collect { link ->
+                _uiState.value = _uiState.value.copy(vlessLink = link)
+            }
+        }
+    }
+
+    fun refresh() = loadData()
 
     private fun loadData() {
         viewModelScope.launch {
@@ -75,25 +82,34 @@ class HomeViewModel(
         }
     }
 
-    fun onVlessLinkPasted(link: String) {
+    fun refreshVpnConfig() {
         viewModelScope.launch {
-            storage.saveVlessLink(link)
-            _uiState.value = _uiState.value.copy(vlessLink = link)
+            val token = storage.token.firstOrNull() ?: return@launch
+            _uiState.value = _uiState.value.copy(isLoading = true)
+            val link = repository.getVpnConfig(token)
+            _uiState.value = _uiState.value.copy(
+                isLoading = false,
+                vlessLink = link,
+                info = if (link != null) "Конфигурация обновлена" else "Не удалось получить конфигурацию"
+            )
         }
     }
 
-    fun toggleVpn() {
-        val current = _uiState.value.vpnState
-        _uiState.value = _uiState.value.copy(
-            vpnState = when (current) {
-                VpnConnectionState.DISCONNECTED -> VpnConnectionState.CONNECTED
-                VpnConnectionState.CONNECTED -> VpnConnectionState.DISCONNECTED
-                VpnConnectionState.CONNECTING -> VpnConnectionState.DISCONNECTED
-            }
-        )
+    fun onVlessLinkPasted(link: String) {
+        viewModelScope.launch {
+            storage.saveVlessLink(link)
+            _uiState.value = _uiState.value.copy(
+                vlessLink = link,
+                info = "Ссылка сохранена"
+            )
+        }
     }
 
     fun clearError() {
         _uiState.value = _uiState.value.copy(error = null)
+    }
+
+    fun clearInfo() {
+        _uiState.value = _uiState.value.copy(info = null)
     }
 }

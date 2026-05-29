@@ -35,7 +35,7 @@ data class AccessRequestResponse(
 @Serializable
 data class VpnConfigResponse(
     val vlessLink: String,
-    val isActive: String
+    val isActive: Boolean
 )
 
 @Serializable
