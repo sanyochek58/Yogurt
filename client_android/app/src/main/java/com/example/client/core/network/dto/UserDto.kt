@@ -1,4 +1,4 @@
-package com.example.client.core.network.dto
+package com.yogurtvpn.client.core.network.dto
 
 import kotlinx.serialization.Serializable
 
