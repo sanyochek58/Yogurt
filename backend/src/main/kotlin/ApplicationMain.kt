@@ -75,5 +75,5 @@ fun Application.module(){
     configureHTTP()
     configureStatusPages()
     configureSecurity(jwtSecret, jwtIssuer, jwtAudience)
-    configureRouting(authService, jwtService, accessRequestService)
+    configureRouting(authService, jwtService, accessRequestService, vpnConfigService)
 }

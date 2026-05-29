@@ -5,6 +5,8 @@ import com.yogurtvpn.features.access.presentation.accessRoutes
 import com.yogurtvpn.features.auth.domain.AuthService
 import com.yogurtvpn.features.auth.domain.JwtService
 import com.yogurtvpn.features.auth.presentation.authRoutes
+import com.yogurtvpn.features.vpn.domain.VpnConfigService
+import com.yogurtvpn.features.vpn.presentation.vpnRoutes
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.*
 import io.ktor.server.response.*
@@ -17,7 +19,7 @@ data class HealthResponse(
     val version: String
 )
 
-fun Application.configureRouting(authService: AuthService, jwtService: JwtService, accessRequestService: AccessRequestService) {
+fun Application.configureRouting(authService: AuthService, jwtService: JwtService, accessRequestService: AccessRequestService, vpnConfigService: VpnConfigService) {
     routing {
         get("/health") {
             call.respond(
@@ -30,5 +32,6 @@ fun Application.configureRouting(authService: AuthService, jwtService: JwtServic
         }
         authRoutes(authService, jwtService)
         accessRoutes(accessRequestService)
+        vpnRoutes(vpnConfigService)
     }
 }
