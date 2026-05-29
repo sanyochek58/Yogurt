@@ -1,4 +1,4 @@
-package com.example.client.core.theme
+package com.yogurtvpn.client.core.theme
 
 import androidx.compose.ui.graphics.Color
 
