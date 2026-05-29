@@ -56,6 +56,7 @@ fun RegisterScreen(
             onClick = onNavigateToLogin,
             modifier = Modifier
                 .align(Alignment.TopStart)
+                .statusBarsPadding()
                 .padding(8.dp)
         ) {
             Icon(
@@ -68,6 +69,7 @@ fun RegisterScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .statusBarsPadding()
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
