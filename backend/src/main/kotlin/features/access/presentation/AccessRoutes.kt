@@ -18,19 +18,21 @@ import java.util.UUID
 data class AccessRequestResponse(
     val id: String,
     val userId: String,
+    val userEmail: String,
     val status: String,
     val requestedAt: String,
     val reviewedAt: String?,
-    val reviewedBy: String
+    val reviewedBy: String?
 )
 
 fun AccessRequest.toResponse() = AccessRequestResponse(
     id = id.toString(),
     userId = userId.toString(),
+    userEmail = userEmail,
     status = status.name,
     requestedAt = requestedAt.toString(),
     reviewedAt = reviewedAt?.toString(),
-    reviewedBy = reviewedBy.toString()
+    reviewedBy = reviewedBy?.toString()
 )
 
 fun Route.accessRoutes(service: AccessRequestService) {
@@ -56,9 +58,9 @@ fun Route.accessRoutes(service: AccessRequestService) {
 
     authenticate("auth-admin"){
         route("/api/v1/admin/access-requests") {
-            get{
-                val request = service.getAllPending()
-                call.respond(HttpStatusCode.OK, request.map { it.toResponse() })
+            get {
+                val requests = service.getAll()
+                call.respond(HttpStatusCode.OK, requests.map { it.toResponse() })
             }
 
             post("/{id}/approve") {
@@ -68,6 +70,15 @@ fun Route.accessRoutes(service: AccessRequestService) {
 
                 val approved = service.approve(requestId, userId)
                 call.respond(HttpStatusCode.OK, approved.toResponse())
+            }
+
+            post("/{id}/reject") {
+                val principal = call.principal<JWTPrincipal>()!!
+                val userId = UUID.fromString(principal.subject!!)
+                val requestId = UUID.fromString(call.parameters["id"] ?: throw IllegalArgumentException("Missing request id"))
+
+                val rejected = service.reject(requestId, userId)
+                call.respond(HttpStatusCode.OK, rejected.toResponse())
             }
         }
     }

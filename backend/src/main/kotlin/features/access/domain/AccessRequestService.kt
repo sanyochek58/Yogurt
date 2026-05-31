@@ -21,6 +21,9 @@ class AccessRequestService(
     suspend fun getAllPending(): List<AccessRequest> =
         repository.findAllPending()
 
+    suspend fun getAll(): List<AccessRequest> =
+        repository.findAll()
+
     suspend fun approve(requestId: UUID, adminId: UUID): AccessRequest {
         val request = repository.findById(requestId) ?: throw IllegalArgumentException("No access request found")
 
@@ -31,5 +34,15 @@ class AccessRequestService(
         val approved = repository.approve(requestId, adminId)
         vpnConfigService.createConfigForUSer(approved.userId)
         return approved
+    }
+
+    suspend fun reject(requestId: UUID, adminId: UUID): AccessRequest {
+        val request = repository.findById(requestId) ?: throw IllegalArgumentException("No access request found")
+
+        if(request.status != AccessRequestStatus.PENDING) {
+            throw IllegalArgumentException("Request is already ${request.status.name.lowercase()}")
+        }
+
+        return repository.reject(requestId, adminId)
     }
 }

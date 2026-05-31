@@ -6,6 +6,7 @@ import java.util.UUID
 data class AccessRequest(
     val id: UUID,
     val userId: UUID,
+    val userEmail: String,
     val status: AccessRequestStatus,
     val requestedAt: LocalDateTime,
     val reviewedAt: LocalDateTime?,

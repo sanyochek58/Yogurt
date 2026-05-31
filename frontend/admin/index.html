@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YgourtVPN - Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="static/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="static/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="static/apple-touch-icon.png">
+</head>
+<body>
+    <section id="login-screen" class="screen">
+        <div class="login-card">
+            <div class="logo">
+                <span class="logo-icon">
+                    <img src="static/logo-vpn.jpg" alt="YgourtVPN Logo">
+                </span>
+                <p class="subtitle">Admin Panel</p>
+            </div>
+
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="email">Логин</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+
+                <div id="login-error" class="error-message hidden"></div>
+
+                <button type="submit" class="btn-primary" id="login-btn">Войти</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="requests-screen" class="screen hidden">
+        <header class="app-header">
+            <div class="header-left">
+                <span class="logo-icon">
+                    <img src="static/logo-vpn.jpg" alt="YgourtVPN Logo">
+                </span>
+                <h1>YogurtVPN Admin</h1>
+            </div>
+            <div class="header-right">
+                <span id="admin-email" class="admin-email"></span>
+                <button id="logout-btn" class="btn-secondary">Выйти</button>
+            </div>
+        </header>
+        <main class="content">
+            <div class="content-header">
+                <h2>Заявки на доступ</h2>
+                <button id="refresh-btn" class="btn-secondary">Обновить</button>
+            </div>
+
+            <div id="loading" class="loading hidden">Загрузка...</div>
+
+             <div id="requests-error" class="error-message hidden"></div>
+
+            <table class="requests-table" id="requests-table">
+                <thead>
+                    <tr>
+                        <th>Email пользователя</th>
+                        <th>Дата подачи</th>
+                        <th>Статус</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="requests-tbody">
+                    
+                </tbody>
+            </table>
+
+            <div id="empty-state" class="empty-state hidden">
+                Заявок пока нет
+            </div>
+        </main>
+    </section>
+    <script src="app.js"></script>
+</body>
+</html>

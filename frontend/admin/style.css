@@ -1,0 +1,387 @@
+/* ==========================================
+   CSS-ПЕРЕМЕННЫЕ — фирменная палитра YogurtVPN
+   Объявляются в :root — доступны во всём документе
+   ========================================== */
+:root {
+    /* Основные цвета бренда */
+    --yogurt-purple: #C084FC;
+    --yogurt-purple-dark: #9333EA;
+    --yogurt-pink: #F9A8D4;
+    --yogurt-pink-light: #FDF2F8;
+
+    /* Градиенты */
+    --gradient-bg: linear-gradient(135deg, #FBCFE8 0%, #E9D5FF 50%, #C4B5FD 100%);
+    --gradient-btn: linear-gradient(135deg, #C084FC 0%, #9333EA 100%);
+
+    /* Статусы */
+    --status-pending: #F59E0B;     /* оранжевый — на рассмотрении */
+    --status-approved: #10B981;    /* зелёный — одобрено */
+    --status-rejected: #EF4444;    /* красный — отклонено */
+
+    --gray-50: #F9FAFB;
+    --gray-100: #F3F4F6;
+    --gray-200: #E5E7EB;
+    --gray-500: #6B7280;
+    --gray-700: #374151;
+    --gray-900: #111827;
+    --white: #FFFFFF;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(147, 51, 234, 0.15);
+
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--gray-900);
+    -webkit-font-smoothing: antialiased;
+}
+
+.screen {
+    min-height: 100vh;
+    width: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+#login-screen {
+    background: var(--gradient-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-card {
+    background: var(--white);
+    padding: 48px 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 420px;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.logo-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.logo-icon img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+}
+
+.header-left .logo-icon img {
+    width: 36px;
+    height: 36px;
+}
+
+.logo h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--yogurt-purple-dark);
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    color: var(--gray-500);
+    font-size: 14px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.form-group input {
+    padding: 12px 16px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: var(--yogurt-purple);
+    box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.15);
+}
+
+.form-group input::placeholder {
+    color: var(--gray-500);
+}
+
+.btn-primary {
+    background: var(--gradient-btn);
+    color: var(--white);
+    border: none;
+    padding: 14px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+}
+
+.btn-primary:hover:not(:disabled) {
+    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
+}
+
+.btn-primary:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background: var(--white);
+    color: var(--gray-700);
+    border: 1.5px solid var(--gray-200);
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.btn-secondary:hover {
+    border-color: var(--yogurt-purple);
+    color: var(--yogurt-purple-dark);
+}
+
+.btn-approve {
+    background: var(--status-approved);
+    color: var(--white);
+    border: none;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.btn-reject {
+    background: var(--status-rejected);
+    color: var(--white);
+    border: none;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+}
+
+.btn-approve:hover { opacity: 0.9; }
+.btn-reject:hover { opacity: 0.9; }
+
+.error-message {
+    background: #FEE2E2;
+    color: #991B1B;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    border-left: 3px solid var(--status-rejected);
+}
+
+#requests-screen {
+    background: var(--gray-50);
+}
+
+.app-header {
+    background: var(--white);
+    padding: 16px 32px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-left .logo-icon {
+    font-size: 28px;
+    margin: 0;
+}
+
+.header-left h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--yogurt-purple-dark);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.admin-email {
+    color: var(--gray-500);
+    font-size: 14px;
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.content-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--gray-900);
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--gray-500);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 40px;
+    color: var(--gray-500);
+    background: var(--white);
+    border-radius: var(--radius-md);
+    border: 2px dashed var(--gray-200);
+}
+
+.requests-table {
+    width: 100%;
+    background: var(--white);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border-collapse: collapse;
+}
+
+.requests-table thead {
+    background: var(--yogurt-pink-light);
+}
+
+.requests-table th {
+    text-align: left;
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--yogurt-purple-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.requests-table td {
+    padding: 16px 20px;
+    border-top: 1px solid var(--gray-100);
+    font-size: 14px;
+    color: var(--gray-700);
+}
+
+.requests-table tbody tr:hover {
+    background: var(--gray-50);
+}
+
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-pending {
+    background: #FEF3C7;
+    color: var(--status-pending);
+}
+
+.status-approved {
+    background: #D1FAE5;
+    color: var(--status-approved);
+}
+
+.status-rejected {
+    background: #FEE2E2;
+    color: var(--status-rejected);
+}
+
+/* ==========================================
+   АДАПТИВНОСТЬ — мобильные устройства
+   ========================================== */
+@media (max-width: 768px) {
+    .content {
+        padding: 16px;
+    }
+
+    .app-header {
+        padding: 12px 16px;
+    }
+
+    .header-left h1 {
+        font-size: 16px;
+    }
+
+    .admin-email {
+        display: none;
+    }
+
+    .requests-table th,
+    .requests-table td {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+}
