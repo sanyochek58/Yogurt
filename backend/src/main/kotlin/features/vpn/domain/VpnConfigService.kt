@@ -8,6 +8,9 @@ class VpnConfigService(
     private val serverPort: Int,
     private val publicKey: String,
     private val shortId: String,
+    // UUID клиента, зарегистрированного в конфиге xray-сервера (clients[].id).
+    // Должен совпадать с сервером, иначе VLESS-авторизация падает и трафик не идёт.
+    private val clientId: UUID,
     private val emailService: EmailService
 ) {
 
@@ -17,7 +20,7 @@ class VpnConfigService(
             return existingConfig
         }
 
-        val vlessUuid = UUID.randomUUID()
+        val vlessUuid = clientId
         val vlessLink = buildVlessLink(vlessUuid)
 
         val config = repository.create(userId, vlessUuid, vlessLink)
@@ -30,10 +33,12 @@ class VpnConfigService(
 
     private fun buildVlessLink(vlessId: UUID): String =
         "vless://$vlessId@$serverHost:$serverPort" +
-                "?type=tcp@security=reality" +
+                "?type=tcp" +
+                "&security=reality" +
                 "&pbk=$publicKey" +
-                "&fp=chrome" +
+                "&sid=$shortId" +
                 "&sni=www.microsoft.com" +
+                "&fp=chrome" +
                 "&flow=xtls-rprx-vision" +
                 "#YogurtVPN"
 }

@@ -32,6 +32,7 @@ fun Application.module(){
     val serverPort = environment.config.property("xray.serverPort").getString().toInt()
     val publicKey = environment.config.property("xray.publicKey").getString()
     val shortId = environment.config.property("xray.shortId").getString()
+    val clientId = environment.config.property("xray.clientId").getString()
 
     val emailHost = environment.config.property("email.host").getString()
     val emailPort = environment.config.property("email.port").getString().toInt()
@@ -63,6 +64,7 @@ fun Application.module(){
         serverPort = serverPort,
         publicKey = publicKey,
         shortId = shortId,
+        clientId = java.util.UUID.fromString(clientId),
         emailService = emailService,
     )
 
