@@ -16,7 +16,7 @@ import io.ktor.http.ContentType
 
 class YogurtApi(
     private val client: HttpClient,
-    private val baseUrl: String = "http://185.94.164.150"
+    private val baseUrl: String = "https://yogurtdev.site"
 ) {
 
     suspend fun register(email: String, password: String): AuthResponse =
