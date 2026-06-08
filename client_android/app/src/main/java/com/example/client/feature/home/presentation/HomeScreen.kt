@@ -162,7 +162,8 @@ fun HomeScreen(
                 uiState = uiState,
                 onRequestAccess = viewModel::requestAccess,
                 onPasteLink = onNavigateToPasteLink,
-                onRefresh = viewModel::refreshVpnConfig
+                onRefresh = viewModel::refreshVpnConfig,
+                onRefreshStatus = viewModel::refresh
             )
         }
 
@@ -457,7 +458,8 @@ fun AccessStatusCard(
     uiState: HomeUiState,
     onRequestAccess: () -> Unit,
     onPasteLink: () -> Unit,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
+    onRefreshStatus: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -495,7 +497,7 @@ fun AccessStatusCard(
 
                 uiState.accessStatus == "PENDING" -> {
                     Text(
-                        text = "⏳ Заявка на рассмотрении",
+                        text = "Заявка на рассмотрении",
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Bold,
                         color = StatusConnecting
@@ -506,11 +508,30 @@ fun AccessStatusCard(
                         color = TextSecondary,
                         textAlign = TextAlign.Center
                     )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    OutlinedButton(
+                        onClick = onRefreshStatus,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(46.dp),
+                        shape = RoundedCornerShape(14.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = YogurtPurpleDark
+                        )
+                    ) {
+                        Icon(
+                            Icons.Outlined.Refresh,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text("Обновить статус", fontSize = 13.sp)
+                    }
                 }
 
                 uiState.accessStatus == "APPROVED" && !uiState.vlessLink.isNullOrBlank() -> {
                     Text(
-                        text = "✓ Конфигурация активна",
+                        text = "Конфигурация активна",
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Bold,
                         color = StatusConnected
@@ -561,7 +582,7 @@ fun AccessStatusCard(
 
                 uiState.accessStatus == "APPROVED" -> {
                     Text(
-                        text = "✓ Доступ одобрен",
+                        text = "Доступ одобрен",
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Bold,
                         color = StatusConnected

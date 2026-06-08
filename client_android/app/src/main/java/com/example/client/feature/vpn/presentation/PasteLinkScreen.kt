@@ -152,7 +152,7 @@ fun PasteLinkScreen(
                 )
             ) {
                 Text(
-                    text = "💡 Ссылка начинается с vless:// и была отправлена на вашу почту после одобрения заявки",
+                    text = "Ссылка начинается с vless:// и была отправлена на вашу почту после одобрения заявки",
                     modifier = Modifier.padding(16.dp),
                     style = MaterialTheme.typography.bodySmall,
                     color = YogurtPurpleDark,
