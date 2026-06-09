@@ -1,2 +1,7 @@
 .idea
 *.idea
+
+# Секреты окружения
+.env
+*.env
+!*.env.example
