@@ -1,0 +1,1 @@
+ALTER TABLE vpn_configs DROP CONSTRAINT vpn_configs_vless_uuid_key;

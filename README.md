@@ -7,6 +7,15 @@ Self-hosted VPN-сервис на базе протокола **VLESS + REALITY*
 
 ---
 
+## Установка
+
+Скачай Android-приложение из раздела [**Releases**](../../releases) и установи APK на телефон.
+Дальше — регистрация, заявка на доступ, подключение в одно нажатие.
+
+> Минимальная версия Android — 8.0 (API 26).
+
+---
+
 ## Архитектура
 
 ```
@@ -146,6 +155,15 @@ cd client_android
 
 Или откройте каталог `client_android/` в Android Studio.
 Базовый URL API задаётся в `core/network/YogurtApi.kt`.
+
+Сборка подписанного APK для Releases:
+
+```bash
+./gradlew assembleRelease
+# → app/build/outputs/apk/release/app-release.apk
+```
+
+Параметры подписи берутся из `keystore.properties` (вне git, образец — `keystore.properties.example`).
 
 ### Веб-админка
 

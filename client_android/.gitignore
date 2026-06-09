@@ -13,3 +13,8 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Подпись release-сборки — секреты, в git не попадают
+keystore.properties
+*.jks
+*.keystore
